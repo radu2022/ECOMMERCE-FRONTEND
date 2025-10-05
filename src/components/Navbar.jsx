@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-md">
       <div className="container mx-auto px-4 md:px-16 lg:px-24 py-4 flex justify-between items-center">
-        <div className="text-lg font-bold">
+        <div className="text-lg font-bold text-teal-600">
           <Link to="/">e-SHOP</Link>
         </div>
         <div className="relative flex-1 mx-4">
@@ -19,20 +19,25 @@ const Navbar = () => {
             <Input
               type="search"
               placeholder="Search for products..."
-              className="w-full border py-2 px-4"
+              className="w-full border border-teal-200 py-2 px-4"
             />
-            <Search className="absolute top-2 right-2 size-5" />
+            <Search className="absolute top-2 right-2 size-5 text-teal-600" />
           </form>
         </div>
         <div className="flex space-x-4 items-center">
           <Link className="relative" to="/cart">
             {/* Cart notification */}
-            <FaShoppingCart className="text-lg"/>
-            {products.length > 0 && 
-            <span className="absolute bottom-2.5 text-xs w-4 left-2.5 bg-red-600 rounded-full flex justify-center items-center text-white">{products.length}</span>}
+            <FaShoppingCart className="text-lg text-teal-600" />
+            {products.length > 0 && (
+              <span className="absolute bottom-2.5 text-xs w-4 left-2.5 bg-red-600 rounded-full flex text-white justify-center font-semibold">
+                {products.length}
+              </span>
+            )}
           </Link>
-          <Button className="hidden md:block">Login | Register</Button>
-          <Button className="block md:hidden">
+          <Button className="hidden md:block bg-teal-600">
+            Login | Register
+          </Button>
+          <Button className="block md:hidden bg-teal-600">
             <UserRound />
           </Button>
         </div>

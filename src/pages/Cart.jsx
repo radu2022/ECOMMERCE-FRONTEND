@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import EmptyCart from "../assets/Images/emptycart.png";
 import { Button } from "@/components/ui/button";
 import { FaTrashAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   incrementQuantity,
   decrementQuantity,
@@ -15,6 +15,7 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const [address, setAddress] = useState("main street, 0012");
   const [isEditingAddress, setIsEditingAddress] = useState(false);
+  const navigate = useNavigate()
 
   // Calculate total quantity and price if not provided by Redux
   const totalQuantity = cart.products.reduce(
@@ -115,8 +116,9 @@ const Cart = () => {
                         </td>
 
                         {/* SUBTOTAL */}
-                        <td className="px-6 py-2 md:py-4 md:table-cell text-center md:text-left font-light before:content-['Subtotal:'] md:before:content-[''] block md:w-auto">
-                          ${(product.quantity * product.price).toFixed(2)}
+                        <td className="px-6 py-2 md:py-4 md:table-cell text-center md:text-left font-semibold before:content-['Subtotal:'] md:before:content-[''] block md:w-auto">
+                          {" $"}
+                          {(product.quantity * product.price).toFixed(2)}
                         </td>
 
                         {/* REMOVE BUTTON */}
@@ -179,14 +181,14 @@ const Cart = () => {
                         {address}
                       </span>
                     </p>
-                    <Button
+                    <button
                       variant="link"
                       className="text-blue-500 mt-2 hover:text-blue-700 cursor-pointer"
                       onClick={() => setIsEditingAddress(true)}
                       aria-label="Change shipping address"
                     >
                       Change Address
-                    </Button>
+                    </button>
                   </div>
                 )}
               </div>
@@ -195,7 +197,10 @@ const Cart = () => {
                 <span>${cart.totalPrice?.toFixed(2) || totalPrice}</span>
               </div>
               <Link to="/checkout">
-                <Button className="w-full bg-red-600 hover:bg-red-800">
+                <Button
+                  className="w-full bg-red-700 hover:bg-red-800 cursor-pointer"
+                  onClick={() => navigate("/checkout")}
+                >
                   Proceed to Checkout
                 </Button>
               </Link>

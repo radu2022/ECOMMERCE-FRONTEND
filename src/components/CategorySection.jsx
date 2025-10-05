@@ -32,7 +32,7 @@ const CategorySection = () => {
             className="w-full h-full object-cover rounded-sm shadow-md"
           />
           <div className="absolute bottom-6 left-6">
-            <p className="text-xl font-bold">{category.title}</p>
+            <p className="text-xl font-bold text-teal-700">{category.title}</p>
             {/* <p className="text-gray-600">View All</p> */}
           </div>
         </div>
