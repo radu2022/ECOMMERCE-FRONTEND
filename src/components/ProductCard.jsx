@@ -2,16 +2,30 @@ import { Star } from "lucide-react";
 import React from "react";
 import { FaStar } from "react-icons/fa";
 import { addToCart } from "../redux/cartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+
+
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart);
+
   const handleaddToCart = (e, product) => {
     e.stopPropagation();
     e.preventDefault();
-    dispatch(addToCart(product));
-    alert("Product added Succesfully!");
+
+    const alreadyInCart = cart.products.some((item) => item.id === product.id);
+
+    if (alreadyInCart) {
+      toast.info("🛒 Product is already in your cart!");
+    } else {
+      dispatch(addToCart(product));
+      toast.success("Product added successfully!");
+    }
   };
+
+
 
   return (
     <div className="bg-white p-4 shadow rounded relative border border-teal-50 transform transition-transform duration-300 hover:scale-105 text-teal-800">
@@ -30,10 +44,10 @@ const ProductCard = ({ product }) => {
         <FaStar className="text-yellow-500" />
       </div>
       <div
-        className="absolute bottom-4 right-4 flex items-center justify-center w-8 h-8 bg-teal-300 shadow-md group text-white text-sm rounded-full hover:w-32 hover:bg-teal-500 transition-all duration-100 cursor-pointer"
+        className="absolute bottom-4 right-4 flex items-center justify-center w-6 h-6 bg-red-600 shadow-md group text-white text-sm rounded-full hover:w-32 hover:bg-teal-700 transition-all duration-100 cursor-pointer"
         onClick={(e) => handleaddToCart(e, product)}
       >
-        <span className="group-hover:hidden text-2xl items-center mb-1.5 cursor-pointer">
+        <span className="group-hover:hidden text-2xl items-center mb-1.5 cursor-pointer text-white font-bold">
           +
         </span>
         <span className="hidden group-hover:block cursor-pointer shadow-md">

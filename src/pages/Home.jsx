@@ -7,6 +7,7 @@ import InfoSection from "../components/InfoSection";
 import CategorySection from "../components/CategorySection";
 import { setProducts } from "../redux/productSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import Shop from "./Shop";
 
@@ -16,26 +17,29 @@ const Home = () => {
   useEffect(() => {
     dispatch(setProducts(mockData));
   }, []);
-const FloatingCartIcon = () => {
-  // Get cart products from mock state
-  const cartProducts = useSelector((state) => state.cart.products);
-  const totalItems = cartProducts.length;
 
-  return (
-    <Link
-      to="/cart"
-      // Key styling for floating: fixed positioning, bottom-right placement, high z-index
-      className="fixed bottom-6 right-6 z-50 p-4 rounded-full bg-teal-600 text-white shadow-2xl hover:bg-teal-700 transition transform hover:scale-110 duration-300"
-      aria-label={`View shopping cart with ${totalItems} items`}
-    >
-      <CartIcon size={28} />
-      {totalItems > 0 && (
-        <span className="absolute top-0 right-0 w-6 h-6 bg-red-600 text-white text-xs font-bold rounded-full flex items-center justify-center border-2 border-white animate-pulse">
-          {totalItems}
-        </span>
-      )}
-    </Link>
-  );
+  const navigate = useNavigate();
+  <Button onClick={() => navigate("/shop")}>Continue Shopping</Button>;
+const FloatingCartIcon = () => {
+    // Get cart products from mock state
+    const cartProducts = useSelector(state => state.cart.products);
+    const totalItems = cartProducts.length;
+
+    return (
+        <Link 
+            to="/cart" 
+            // Key styling for floating: fixed positioning, bottom-right placement, high z-index
+            className="fixed bottom-6 right-6 z-50 p-4 rounded-full bg-teal-600 text-white shadow-2xl hover:bg-teal-700 transition transform hover:scale-110 duration-300"
+            aria-label={`View shopping cart with ${totalItems} items`}
+        >
+            <CartIcon size={28} />
+            {totalItems > 0 && (
+                <span className="absolute top-0 right-0 w-6 h-6 bg-red-600 text-white text-xs font-bold rounded-full flex items-center justify-center border-2 border-white animate-pulse">
+                    {totalItems}
+                </span>
+            )}
+        </Link>
+    );
 };
   return (
     <div>
@@ -77,9 +81,7 @@ const FloatingCartIcon = () => {
                 MILLIONS+ PRODUCTS
               </p>
 
-              <Button className="bg-red-600 text-white px-4 py-2 hover:bg-white hover:text-black rounded-lg shadow-md mt-4 transform transition-transform duration-300 hover:scale-105 cursor-pointer">
-                SHOP NOW
-              </Button>
+              <Button>SHOP NOW</Button>
             </div>
           </div>
         </div>
@@ -96,7 +98,8 @@ const FloatingCartIcon = () => {
           </div>
         </div>
       </div>
-      <Shop />
+      <Link to="/shop">
+      </Link>
     </div>
   );
 };

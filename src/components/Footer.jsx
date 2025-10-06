@@ -17,29 +17,26 @@ const Footer = () => {
             accessible to everyone. Happy shopping!
           </p>
         </div>
-        <div className="flex flex-col md:items-left">
+        <div className="flex flex-col md:items-start">
           <h4 className="text-lg font-semibold">Quick Links</h4>
           <ul className="mt-4 space-y-2">
             <li>
-              <Link to="/" className="hover:underline cursor-pointer">
+              <Link to="/">
                 Home
               </Link>
             </li>
             <li>
-              <Link to="/shop" className="hover:underline cursor-pointer">
+              <Link to="/shop">
                 Shop
               </Link>
             </li>
             <li>
-              <Link to="/contact" className="hover:underline cursor-pointer">
+              <Link to="/contact" className="hover:underline">
                 Contact
               </Link>
             </li>
             <li>
-              <Link
-                to="/about"
-                className="hover:underline  color-blue-200 cursor-pointer"
-              >
+              <Link to="/about" className="hover:underline ">
                 About
               </Link>
             </li>
@@ -73,7 +70,7 @@ const Footer = () => {
               placeholder="Enter your email"
               className="w-full p-2 rounded-l-lg bg-gray-800 border border-gray-600"
             />
-            <Button className="bg-red-600 text-white px-4 py-2 rounded-r-lg rounded-l-none hover:bg-white-300 cursor-pointer hover:text-black">
+            <Button className="px-4 py-2 border border-gray-600 h-10 rounded-r-lg rounded-l-none hover:bg-white-300 cursor-pointer hover:text-black">
               Subscribe
             </Button>
           </form>
