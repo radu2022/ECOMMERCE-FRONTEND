@@ -17,7 +17,6 @@ export const Categories = [
     "Sports",
     "Automotive",
     "Cosmotics",
-    "Books",
 ];
 
 export const mockData = [

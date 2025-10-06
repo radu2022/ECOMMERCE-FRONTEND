@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -55,7 +57,7 @@ const Checkout = () => {
         },
       }),
     });
-    alert("Order placed successfully!"); // Replace with proper UI feedback
+    toast.success("Order placed successfully!"); // Replace with proper UI feedback
     navigate("/"); // Redirect to home
   };
 
@@ -212,7 +214,7 @@ const Checkout = () => {
                 </p>
               </div>
             )}
-            <div className="flex justify-between items-center pt-4 mt-4">
+            <div className="flex justify-between items-center pt-4 mt-4 mb-4">
               <Link to="/cart">
                 <Button className="bg-teal-800 h-6">Back to Cart</Button>
               </Link>
