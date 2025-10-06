@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, UserRound } from "lucide-react";
+import { Search, UserRound, Menu, X } from "lucide-react";
 import { useSelector } from "react-redux";
 import { FaShoppingCart } from "react-icons/fa";
 
@@ -10,6 +10,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const products = useSelector((state) => state.cart.products);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const navLinks = [
     { name: "HOME", path: "/" },
@@ -19,7 +20,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/500 backdrop-blur-md shadow-sm">
+    <nav className="sticky top-0 z-50 bg-white/300 backdrop-blur-md shadow-sm">
       <div className="container mx-auto px-4 md:px-16 lg:px-24 py-4 flex justify-between items-center">
         {/* Logo */}
         <div className="text-xl font-extrabold text-teal-600 tracking-wide">
@@ -27,8 +28,8 @@ const Navbar = () => {
         </div>
 
         {/* Search */}
-        <div className="relative flex-1 mx-4 max-w-md">
-          <form>
+        <div className="hidden md:flex relative flex-1 mx-4 max-w-full">
+          <form className="w-full">
             <Input
               type="search"
               placeholder="Search products..."
@@ -38,8 +39,8 @@ const Navbar = () => {
           </form>
         </div>
 
-        {/* Cart + Auth */}
-        <div className="flex space-x-4 items-center">
+        {/* Cart + Auth + Mobile Menu Toggle */}
+        <div className="flex items-center space-x-4">
           <Link to="/cart" className="relative">
             <FaShoppingCart className="text-xl text-gray-700 hover:text-teal-600 transition" />
             {products.length > 0 && (
@@ -49,25 +50,31 @@ const Navbar = () => {
             )}
           </Link>
 
-          <div>
-            <Button
-              className="hidden md:inline-block bg-teal-500 hover:bg-teal-600 text-white font-semibold px-4 py-2 rounded-lg transition"
-              onClick={() => navigate("/login")}
-            >
-              Login | Register
-            </Button>
-            <Button
-              className="md:hidden bg-teal-500 hover:bg-teal-600 text-white p-2 rounded-full"
-              onClick={() => navigate("/login")}
-            >
-              <UserRound />
-            </Button>
-          </div>
+          <Button
+            className="hidden md:inline-block bg-teal-500 hover:bg-teal-600 text-white font-semibold px-4 py-2 rounded-lg transition"
+            onClick={() => navigate("/login")}
+          >
+            Login | Register
+          </Button>
+          <Button
+            className="md:hidden bg-teal-500 hover:bg-teal-600 text-white p-2 rounded-full"
+            onClick={() => navigate("/login")}
+          >
+            <UserRound />
+          </Button>
+
+          {/* Hamburger Menu */}
+          <button
+            className="md:hidden text-teal-600"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </div>
 
       {/* Navigation Links */}
-      <div className="flex items-center justify-center space-x-8 py-3 text-sm font-semibold text-gray-700">
+      <div className="hidden md:flex items-center justify-center space-x-8 py-3 text-sm font-semibold text-gray-700">
         {navLinks.map((link) => (
           <Link
             key={link.name}
@@ -80,6 +87,24 @@ const Navbar = () => {
           </Link>
         ))}
       </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden px-4 pb-4 space-y-2 text-sm font-semibold text-gray-700">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              to={link.path}
+              onClick={() => setMenuOpen(false)}
+              className={`block py-2 border-b border-gray-200 hover:text-teal-600 transition ${
+                location.pathname === link.path ? "text-teal-600 underline" : ""
+              }`}
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
+      )}
     </nav>
   );
 };

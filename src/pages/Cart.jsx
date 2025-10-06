@@ -27,7 +27,7 @@ const Cart = () => {
     .toFixed(2);
 
   return (
-    <div className="bg-gray-50">
+    <div className="bg-white">
       <div className="container mx-auto py-8 min-h-96 px-4 md:px-16 lg:px-24">
         {cart.products.length > 0 ? (
           <div className="p-2">
@@ -70,7 +70,7 @@ const Cart = () => {
                           <td className="p-0 md:px-4 md:py-2 md:table-cell w-full md:w-auto">
                             <div className="flex items-center space-x-4">
                               <img
-                                className="h-20 w-20 object-contain rounded"
+                                className="h-10 w-10 object-contain rounded"
                                 src={product.image}
                                 alt={product.name}
                               />
@@ -95,7 +95,7 @@ const Cart = () => {
                                   dispatch(decrementQuantity(product.id))
                                 }
                                 aria-label={`Decrease quantity of ${product.name}`}
-                                className="hover:bg-red-100 cursor-pointer"
+                                className="hover:bg-gray-200 cursor-pointer"
                               >
                                 -
                               </Button>
@@ -109,7 +109,7 @@ const Cart = () => {
                                   dispatch(incrementQuantity(product.id))
                                 }
                                 aria-label={`Increase quantity of ${product.name}`}
-                                className="hover:bg-green-100 cursor-pointer tracking-wider"
+                                className="hover:bg-gray-200 cursor-pointer tracking-wider"
                               >
                                 +
                               </Button>
@@ -179,7 +179,7 @@ const Cart = () => {
                   ) : (
                     <div className="ml-2">
                       <p>
-                        Shipping to:{" "}
+                        To:{" "}
                         <span className="text-md italic font-light">
                           {address}
                         </span>
@@ -206,7 +206,7 @@ const Cart = () => {
                 </div>
                 <Link to="/checkout">
                   <Button
-                    className="w-full cursor-pointer"
+                    className="w-full cursor-pointer bg-red-600 hover:bg-red-700 text-white font-semibold"
                     onClick={() => navigate("/checkout")}
                   >
                     Proceed to Checkout

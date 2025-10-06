@@ -1,4 +1,7 @@
 import React, { useEffect } from "react";
+// Assuming you have a CartIcon component, e.g., from 'lucide-react'
+// If your CartIcon is named differently or is from another library, adjust this line
+import { ShoppingCart as CartIcon } from "lucide-react";
 import { Categories, mockData } from "../assets/mockData";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardContent } from "@/components/ui/Card";
@@ -11,7 +14,32 @@ import { Link, useNavigate } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import HeroSection from "../components/HeroSection";
 
+// --- FloatingCartIcon Component ---
+// Move this component *outside* of the Home function for better practice,
+// or keep it inside if it only makes sense for the Home component.
+const FloatingCartIcon = () => {
+  // Get cart products from mock state
+  // NOTE: Ensure your Redux state structure is `state.cart.products`
+  const cartProducts = useSelector((state) => state.cart.products || []);
+  const totalItems = cartProducts.length;
 
+  return (
+    <Link
+      to="/cart"
+      // Key styling for floating: fixed positioning, bottom-right placement, high z-index
+      className="fixed bottom-6 right-6 z-50 p-4 rounded-full bg-teal-600 text-white shadow-2xl hover:bg-teal-700 transition transform hover:scale-110 duration-300"
+      aria-label={`View shopping cart with ${totalItems} items`}
+    >
+      <CartIcon size={28} />
+      {totalItems > 0 && (
+        <span className="absolute top-0 right-0 w-6 h-6 bg-red-600 text-white text-xs font-bold rounded-full flex items-center justify-center border-2 border-white animate-pulse">
+          {totalItems}
+        </span>
+      )}
+    </Link>
+  );
+};
+// ---------------------------------
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -21,33 +49,18 @@ const Home = () => {
   }, []);
 
   const navigate = useNavigate();
-  <Button onClick={() => navigate("/shop")}>Continue Shopping</Button>;
-const FloatingCartIcon = () => {
-    // Get cart products from mock state
-    const cartProducts = useSelector(state => state.cart.products);
-    const totalItems = cartProducts.length;
+  // The line below was incomplete and not being rendered, I've kept it commented.
+  // <Button onClick={() => navigate("/shop")}>Continue Shopping</Button>;
 
-    return (
-        <Link 
-            to="/cart" 
-            // Key styling for floating: fixed positioning, bottom-right placement, high z-index
-            className="fixed bottom-6 right-6 z-50 p-4 rounded-full bg-teal-600 text-white shadow-2xl hover:bg-teal-700 transition transform hover:scale-110 duration-300"
-            aria-label={`View shopping cart with ${totalItems} items`}
-        >
-            <CartIcon size={28} />
-            {totalItems > 0 && (
-                <span className="absolute top-0 right-0 w-6 h-6 bg-red-600 text-white text-xs font-bold rounded-full flex items-center justify-center border-2 border-white animate-pulse">
-                    {totalItems}
-                </span>
-            )}
-        </Link>
-    );
-};
   return (
     <div>
+      {/* RENDER THE FLOATING CART ICON HERE */}
+      <FloatingCartIcon />
+      {/* --------------------------------- */}
+
       <div className=" mt-2 px-4 md:px-16 lg:px-24">
         <div className=" container mx-auto py-2 flex flex-col md:flex-row space-x-2">
-          <Card className="bg-white boder border-teal-100 text-gray-800 shadow-lg w-full md:w-3/12 rounded-md py-0">
+          <Card className="bg-white boder border-teal-100 shadow-lg w-full md:w-3/12 rounded-md py-0">
             <CardTitle className="text-sm font-bold px-4 py-3 bg-teal-300 rounded-t-md">
               SHOP BY CATEGORIES
             </CardTitle>
@@ -98,14 +111,18 @@ const FloatingCartIcon = () => {
           <h2 className="text-2xl font-bold mb-6 text-center">TOP Products</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
             {products?.products?.slice(0, 5).map((product, index) => (
-              <div className="hover:scale-105 transition-transform duration-300">
-                <ProductCard key={product.id || index} product={product} />
+              <div
+                key={product.id || index}
+                className="hover:scale-105 transition-transform duration-300"
+              >
+                <ProductCard product={product} />
               </div>
             ))}
           </div>
         </div>
       </div>
-      <Link to="/shop"></Link>
+      {/* The line below was a closed Link tag, removed it for clean up */}
+      {/* <Link to="/shop"></Link> */}
     </div>
   );
 };
